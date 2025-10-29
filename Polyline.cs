@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace lab2
 {
-    public class Polyline : Validator
+    public class Polyline
     {
         public List<Point> Points { get; set; }
 
@@ -11,25 +13,19 @@ namespace lab2
 
         public Polyline(params Point[] points)
         {
-            ValidatePointsArray(points);
-            ThrowIfInvalid();
-
+            Validator.Validate(v => v.ValidatePointsArray(points));
             Points = new List<Point>(points);
         }
 
         public void AddPoint(Point point)
         {
-            ValidateNotNull(point, "Точка ломаной");
-            ThrowIfInvalid();
-
+            Validator.Validate(v => v.ValidateNotNull(point, "Точка ломаной"));
             Points.Add(point);
         }
 
         public void AddPoints(params Point[] points)
         {
-            ValidatePointsArray(points);
-            ThrowIfInvalid();
-
+            Validator.Validate(v => v.ValidatePointsArray(points));
             Points.AddRange(points);
         }
 
