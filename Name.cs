@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace lab2
 {
-    public class Name : Validator
+    public class Name
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -8,15 +10,13 @@ namespace lab2
 
         public Name(string firstName)
         {
-            ValidateNamePart(firstName, "Имя", true);
-            ThrowIfInvalid();
+            Validator.Validate(v => v.ValidateNamePart(firstName, "Имя", true));
             FirstName = firstName;
         }
 
         public Name(string lastName, string firstName) : this(firstName)
         {
-            ValidateNamePart(lastName, "Фамилия", true);
-            ThrowIfInvalid();
+            Validator.Validate(v => v.ValidateNamePart(lastName, "Фамилия", true));
             LastName = lastName;
         }
 
@@ -24,8 +24,7 @@ namespace lab2
         {
             if (!string.IsNullOrEmpty(middleName))
             {
-                ValidateNamePart(middleName, "Отчество", false);
-                ThrowIfInvalid();
+                Validator.Validate(v => v.ValidateNamePart(middleName, "Отчество", false));
                 MiddleName = middleName;
             }
         }
