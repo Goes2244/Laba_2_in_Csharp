@@ -251,15 +251,19 @@ namespace lab2
         }
 
         // Статические методы для ввода данных
-        public static int GetValidatedInt(string fieldName, int minValue = 1, int maxValue = 100)
+        public static int GetValidatedInt(string fieldName, int minValue = 1, int maxValue = 100, bool required = true)
         {
             while (true)
             {
                 try
                 {
                     string input = Console.ReadLine();
-                    Validate(v => v.ValidateInt(int.Parse(input), fieldName, minValue, maxValue, true));
+                    Validate(v => v.ValidateInt(int.Parse(input), fieldName, minValue, maxValue, required));
                     return int.Parse(input);
+                }
+                catch (FormatException)
+                {
+                    Console.Write($"Ошибка: введите целое число для {fieldName}. Введите снова: ");
                 }
                 catch (ValidationException ex)
                 {
@@ -330,6 +334,10 @@ namespace lab2
                     Validate(v => v.ValidateHeight(height));
                     return (int)height;
                 }
+                catch (FormatException)
+                {
+                    Console.Write("Ошибка: введите число для роста. Введите снова: ");
+                }
                 catch (ValidationException ex)
                 {
                     Console.Write($"{ex.Message}. Введите снова: ");
@@ -390,4 +398,5 @@ namespace lab2
     {
         public ValidationException(string message) : base(message) { }
     }
+    
 }
