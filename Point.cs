@@ -1,15 +1,17 @@
+using System;
+
 namespace lab2
 {
-    public class Point : Validator
+    public class Point
     {
         public double X { get; set; }
         public double Y { get; set; }
 
         public Point(double x, double y)
         {
-            ValidateCoordinate(x, "Координата X")
-                .ValidateCoordinate(y, "Координата Y");
-            ThrowIfInvalid();
+            Validator.Validate(v => v
+                .ValidateCoordinate(x, "Координата X")
+                .ValidateCoordinate(y, "Координата Y"));
 
             X = x;
             Y = y;
@@ -17,9 +19,7 @@ namespace lab2
 
         public double DistanceTo(Point other)
         {
-            ValidateNotNull(other, "Точка для расчета расстояния");
-            ThrowIfInvalid();
-
+            Validator.Validate(v => v.ValidateNotNull(other, "Точка для расчета расстояния"));
             return Math.Sqrt(Math.Pow(other.X - X, 2) + Math.Pow(other.Y - Y, 2));
         }
 
