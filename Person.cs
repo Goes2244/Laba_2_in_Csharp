@@ -1,6 +1,6 @@
 namespace lab2
 {
-    public class Person : Validator
+    public class Person
     {
         public Name PersonName { get; set; }
         public int Height { get; set; }
@@ -8,9 +8,9 @@ namespace lab2
 
         public Person(Name name, int height)
         {
-            ValidateNotNull(name, "Имя")
-                .ValidateHeight(height);
-            ThrowIfInvalid();
+            Validator.Validate(v => v
+                .ValidateNotNull(name, "Имя")
+                .ValidateHeight(height));
 
             PersonName = name;
             Height = height;
@@ -18,9 +18,7 @@ namespace lab2
 
         public Person(Name name, int height, Person father) : this(name, height)
         {
-            ValidateNotNull(father, "Отец");
-            ThrowIfInvalid();
-
+            Validator.Validate(v => v.ValidateNotNull(father, "Отец"));
             Father = father;
             ApplyInheritanceRules();
         }
